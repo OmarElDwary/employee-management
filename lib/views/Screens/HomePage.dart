@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> {
     getEmployees();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: loading
@@ -31,9 +32,33 @@ class _HomePageState extends State<HomePage> {
           : ListView.builder(
               itemCount: employee.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(employee[index].username),
-                  subtitle: Text(employee[index].email),
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.1,
+                  child: ListTile(
+                    leading: Image.network(
+                      employee[index].image,
+                    ),
+                    title: Text(
+                      employee[index].username,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    subtitle: Column(
+                      children: [
+                        Text(
+                            "${employee[index].firstName} ${employee[index].lastName}"),
+                        Row(
+                          children: [
+                            Text(employee[index].email),
+                          ],
+                        ),
+                      ],
+                    ),
+                    trailing: Icon(Icons.more_horiz),
+                  ),
                 );
               },
             ),

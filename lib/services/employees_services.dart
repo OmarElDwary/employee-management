@@ -1,4 +1,6 @@
-import 'package:dio/dio.dart';
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 import 'package:employees/models/employeesModel.dart';
 
 class EmployeesServices {
@@ -8,8 +10,8 @@ class EmployeesServices {
     List<Employees> employees = [];
 
     try {
-      var response = await Dio().get(endpoint);
-      var data = response.data['users'];
+      final response = await http.get(Uri.parse(endpoint));
+      var data = jsonDecode(response.body)['users'];
       data.forEach((el) {
         Employees employee = Employees.fromJson(el);
         employees.add(employee);

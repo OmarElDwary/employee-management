@@ -1,6 +1,5 @@
 import 'package:employees/models/employeesModel.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../Widgets/info_widget.dart';
 
 // ignore: must_be_immutable

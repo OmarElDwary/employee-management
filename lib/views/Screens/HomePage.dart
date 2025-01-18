@@ -17,12 +17,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Employee> employee = [];
   bool loading = true;
-  getEmployees() async {
-    employee = await EmployeesServices().getEmployees();
-    loading = false;
-    setState(() {});
-  }
-
   getEmployeeFromCached() async {
     final prefs = await SharedPreferences.getInstance();
     String data = prefs.getString("employeeData") ?? '';

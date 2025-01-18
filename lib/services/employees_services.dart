@@ -1,19 +1,23 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:employees/models/employeesModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EmployeesServices {
   String endpoint = "http://dummyjson.com/users";
 
-  Future<List<Employees>> getEmployees() async {
-    List<Employees> employees = [];
+  Future<List<Employee>> getEmployees() async {
+    List<Employee> employees = [];
 
     try {
-      final response = await http.get(Uri.parse(endpoint));
-      var data = jsonDecode(response.body)['users'];
+      final response = await Dio().get(endpoint);
+      var data = response.data['users'];
+      var cached = jsonEncode(data); // storre all data and parse them
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('employeeData', cached);
       data.forEach((el) {
-        Employees employee = Employees.fromJson(el);
+        Employee employee = Employee.fromJson(el);
         employees.add(employee);
       });
     } catch (e) {
